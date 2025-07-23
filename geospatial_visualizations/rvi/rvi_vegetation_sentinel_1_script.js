@@ -1,5 +1,7 @@
 //  RVI (Radar Vegetation Index) Monitoring Using Sentinel-1 SAR Imagery (Google Earth Engine Tutorial)
 
+
+
 // 1. Defining the Area Of Interest
 var StudyAreaCoords = [ 
   [1.0451427170895977,47.5985680423624],
@@ -96,13 +98,13 @@ print(
   })
 );
 
-// Extract RVI images for 2023-2024
+// 11. Extract RVI images for 2023-2024
 var rvi_2023_2024 = rviCollection.filterDate('2023-01-01', '2024-12-31').mean();
 
-// Add RVI layer for 2023-2024
+// 12. Add RVI layer for 2023-2024
 Map.addLayer(rvi_2023_2024.clip(StudyArea), {min: 0, max: 1, palette: ['blue', 'green', 'yellow']}, 'RVI 2023-2024');
 
-// Export the processed RVI image
+// 13. Export the processed RVI image
 Export.image.toDrive({
   image: rvi_2023_2024.clip(StudyArea),
   description: 'RVI_2023_2024',
@@ -112,3 +114,10 @@ Export.image.toDrive({
   folder: 'RVI_Analysis',
   maxPixels: 1e13
 });
+
+// BONUS. Import the parcels test
+Map.addLayer(parcels.style({
+  color: 'black',
+  fillColor: '00000000',
+  width: 1
+}), {}, 'Parcels');
